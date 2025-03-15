@@ -1,4 +1,9 @@
+package view;
 
+import javax.swing.JOptionPane;
+import java.util.ArrayList;
+import model.ProdutosDTO;
+import model.ProdutosDAO;
 import java.util.ArrayList;
 import javax.swing.table.DefaultTableModel;
 
@@ -21,6 +26,7 @@ public class listagemVIEW extends javax.swing.JFrame {
         listarProdutos();
     }
 
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -140,13 +146,34 @@ public class listagemVIEW extends javax.swing.JFrame {
         
         ProdutosDAO produtosdao = new ProdutosDAO();
         
-        //produtosdao.venderProduto(Integer.parseInt(id));
+        produtosdao.venderProduto(Integer.parseInt(id));
         listarProdutos();
     }//GEN-LAST:event_btnVenderActionPerformed
 
     private void btnVendasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVendasActionPerformed
-        //vendasVIEW vendas = new vendasVIEW(); 
-        //vendas.setVisible(true);
+         try {
+        ProdutosDAO produtosDAO = new ProdutosDAO();
+        
+        // Cria o modelo da tabela para listar apenas os produtos vendidos
+        DefaultTableModel modelo = (DefaultTableModel) listaProdutos.getModel();
+        modelo.setNumRows(0);  // Limpa a tabela antes de adicionar os novos dados
+        
+        // Obtém a lista de produtos vendidos
+        ArrayList<ProdutosDTO> produtosVendidos = produtosDAO.listarProdutosVendidos();
+        
+        // Preenche a tabela com os dados dos produtos vendidos
+        for (ProdutosDTO produto : produtosVendidos) {
+            modelo.addRow(new Object[]{
+                produto.getId(),
+                produto.getNome(),
+                produto.getValor(),
+                produto.getStatus()
+            });
+        }
+    } catch (Exception e) {
+        
+        JOptionPane.showMessageDialog(this, "Erro ao carregar os produtos vendidos: " + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+    }
     }//GEN-LAST:event_btnVendasActionPerformed
 
     private void btnVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVoltarActionPerformed
