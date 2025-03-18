@@ -6,6 +6,7 @@ import model.ProdutosDTO;
 import model.ProdutosDAO;
 import java.util.ArrayList;
 import javax.swing.table.DefaultTableModel;
+import conectaDAO.java;
 
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
